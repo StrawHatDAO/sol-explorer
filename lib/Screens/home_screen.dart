@@ -50,6 +50,7 @@ class _HomeScreenState extends State<HomeScreen> {
                   textInputAction: TextInputAction.search,
                   onChanged: (value) {},
                   onSubmitted: (String value) => {
+                        debugPrint(value.length.toString()),
                         if (value.length == 44)
                           {
                             Navigator.push(
@@ -59,7 +60,7 @@ class _HomeScreenState extends State<HomeScreen> {
                               ),
                             ),
                           }
-                        else if (value.length == 88)
+                        else if (value.length == 88 || value.length == 87)
                           {
                             Navigator.push(
                               context,
