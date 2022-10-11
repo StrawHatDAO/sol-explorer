@@ -70,9 +70,15 @@ class _HomeScreenState extends State<HomeScreen> {
                           }
                         else
                           {
-                            // TODO: Show error message
-                            print("Invalid address/signature"),
-                            print(value)
+                            ScaffoldMessenger.of(context).showSnackBar(
+                              const SnackBar(
+                                backgroundColor: Colors.redAccent,
+                                content: Text(
+                                  'Please enter a valid account address or transaction signature',
+                                  style: TextStyle(color: Colors.white),
+                                ),
+                              ),
+                            ),
                           }
                       }),
             ),
