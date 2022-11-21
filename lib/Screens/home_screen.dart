@@ -22,7 +22,7 @@ class _HomeScreenState extends State<HomeScreen> {
   @override
   void initState() {
     super.initState();
-    clusterData = getClusterStats(client);
+    clusterData = getClusterStats();
   }
 
   @override
@@ -37,51 +37,48 @@ class _HomeScreenState extends State<HomeScreen> {
           const SizedBox(height: 20),
           Container(
             padding: const EdgeInsets.all(10),
-            child: SizedBox(
-              height: 40,
-              child: TextField(
-                  decoration: const InputDecoration(
-                    labelText: 'Search..',
-                    hintText: 'Enter an account address',
-                    border: OutlineInputBorder(),
-                    prefixIcon: Icon(Icons.search),
-                  ),
-                  keyboardType: TextInputType.text,
-                  textInputAction: TextInputAction.search,
-                  onChanged: (value) {},
-                  onSubmitted: (String value) => {
-                        debugPrint(value.length.toString()),
-                        if (value.length == 44)
-                          {
-                            Navigator.push(
-                              context,
-                              MaterialPageRoute(
-                                builder: (context) => AccountView(value),
-                              ),
-                            ),
-                          }
-                        else if (value.length == 88 || value.length == 87)
-                          {
-                            Navigator.push(
-                              context,
-                              MaterialPageRoute(
-                                builder: (context) => TransactionView(value),
-                              ),
-                            ),
-                          }
-                        else
-                          {
-                            ScaffoldMessenger.of(context).showSnackBar(
-                              const SnackBar(
-                                backgroundColor: Colors.redAccent,
-                                content: Text(
-                                  'Please enter a valid account address or transaction signature',
-                                  style: TextStyle(color: Colors.white),
-                                ),
-                              ),
-                            ),
-                          }
-                      }),
+            child: TextField(
+              decoration: const InputDecoration(
+                labelText: 'Search..',
+                hintText: 'Enter an account address/transaction signature',
+                border: OutlineInputBorder(),
+                prefixIcon: Icon(Icons.search),
+              ),
+              keyboardType: TextInputType.text,
+              textInputAction: TextInputAction.search,
+              onSubmitted: (String value) => {
+                debugPrint(value.length.toString()),
+                if (value.length == 44)
+                  {
+                    Navigator.push(
+                      context,
+                      MaterialPageRoute(
+                        builder: (context) => AccountView(value),
+                      ),
+                    ),
+                  }
+                else if (value.length == 88 || value.length == 87)
+                  {
+                    Navigator.push(
+                      context,
+                      MaterialPageRoute(
+                        builder: (context) => TransactionView(value),
+                      ),
+                    ),
+                  }
+                else
+                  {
+                    ScaffoldMessenger.of(context).showSnackBar(
+                      const SnackBar(
+                        backgroundColor: Colors.redAccent,
+                        content: Text(
+                          'Please enter a valid account address or transaction signature',
+                          style: TextStyle(color: Colors.white),
+                        ),
+                      ),
+                    ),
+                  }
+              },
             ),
           ),
           FutureBuilder<ClusterDataDetails>(
@@ -89,7 +86,6 @@ class _HomeScreenState extends State<HomeScreen> {
             builder: (context, snapshot) {
               if (snapshot.hasData) {
                 return InkWell(
-                  onTap: (() => print(snapshot)),
                   child: Column(
                     children: [
                       Row(
@@ -98,16 +94,16 @@ class _HomeScreenState extends State<HomeScreen> {
                           dataCard(
                             context,
                             "Total Supply",
-                            "${lamportstoMillions(snapshot.data?.circulating)} / 527M"
+                            "${lamportstoMillions(snapshot.data?.circulating)} / ${lamportstoMillions(snapshot.data?.total)}M"
                                 .toString(),
-                            "${circulationPercentage(snapshot.data?.circulating, snapshot.data?.total)}% is circulating",
+                            "${snapshot.data?.circulatingPercent.toStringAsFixed(2)} % is circulating",
                           ),
                           dataCard(
                             context,
                             "Active Stake",
-                            "${lamportstoMillions(snapshot.data?.acitveStake)} / 527M"
+                            "${lamportstoMillions(snapshot.data?.acitveStake)} / ${lamportstoMillions(snapshot.data?.total)}M"
                                 .toString(),
-                            "Delinquent stake: ${circulationPercentage(snapshot.data?.delinquentStake, snapshot.data?.acitveStake)}%",
+                            "Delinquent stake: ${snapshot.data?.totalSolDelinquentRatio.toStringAsFixed(2)}%",
                           )
                         ],
                       ),
@@ -194,9 +190,9 @@ class _HomeScreenState extends State<HomeScreen> {
                                         style: const TextStyle(
                                             color: Colors.white, fontSize: 14),
                                       ),
-                                      const Text(
-                                        " MCap: \$15.5B",
-                                        style: TextStyle(
+                                      Text(
+                                        " MCap: \$${volumeToBillions(snapshot.data?.coinData.marketCap)}",
+                                        style: const TextStyle(
                                             color: Colors.white, fontSize: 14),
                                       ),
                                     ],

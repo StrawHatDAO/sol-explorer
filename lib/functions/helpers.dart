@@ -2,9 +2,8 @@ import 'package:intl/intl.dart';
 import 'package:solana/dto.dart';
 import 'package:solana/solana.dart';
 
-String lamportstoMillions(int? value) {
-  double sol = value! / lamportsPerSol;
-  double inMillions = sol / 1000000;
+String lamportstoMillions(double? value) {
+  double inMillions = value! / 1000000;
   return '${inMillions.toStringAsFixed(1)}M';
 }
 
@@ -13,7 +12,12 @@ String volumeToMillions(int? value) {
   return '${inMillions.toStringAsFixed(1)}M';
 }
 
-String circulationPercentage(int? circulating, int? total) {
+String volumeToBillions(int? value) {
+  double inMillions = value! / 1000000000;
+  return '${inMillions.toStringAsFixed(1)}B';
+}
+
+String circulationPercentage(double? circulating, double? total) {
   double circulatingPercentage = circulating! / total!;
   return (circulatingPercentage * 100).toStringAsFixed(1);
 }

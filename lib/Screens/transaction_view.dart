@@ -22,7 +22,6 @@ class _TransactionViewState extends State<TransactionView> {
   @override
   void initState() {
     super.initState();
-    print(widget.transactionHash);
     transactionDetails = getTransactionDetails(client, widget.transactionHash);
   }
 
@@ -45,8 +44,10 @@ class _TransactionViewState extends State<TransactionView> {
                   children: [
                     TabBar(tabs: [
                       Tab(icon: Icon(Icons.home, color: Colors.green[400])),
-                      Tab(icon: Icon(Icons.home, color: Colors.green[400])),
-                      Tab(icon: Icon(Icons.home, color: Colors.green[400]))
+                      Tab(icon: Icon(Icons.money, color: Colors.green[400])),
+                      Tab(
+                          icon:
+                              Icon(Icons.data_array, color: Colors.green[400]))
                     ]),
                     Expanded(
                       child: TabBarView(
@@ -202,18 +203,17 @@ class _TransactionViewState extends State<TransactionView> {
                                           ),
                                         ),
                                         DataCell(
-                                          Text(
-                                            snapshot.data?.meta?.preBalances[i]
-                                                    .toString() ??
-                                                "",
-                                          ),
+                                          Text(((snapshot.data?.meta
+                                                          ?.preBalances[i] ??
+                                                      0) /
+                                                  lamportsPerSol)
+                                              .toString()),
                                         ),
                                         DataCell(
-                                          Text(
-                                            snapshot.data?.meta?.postBalances[i]
-                                                    .toString() ??
-                                                "",
-                                          ),
+                                          Text((snapshot.data?.meta
+                                                      ?.postBalances[i] ??
+                                                  0 / lamportsPerSol)
+                                              .toString()),
                                         ),
                                         DataCell(
                                           Text(change[i].toString()),

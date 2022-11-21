@@ -3,31 +3,37 @@ class ClusterDataDetails {
     required this.total,
     required this.circulating,
     required this.nonCirculating,
-    required this.nonCirculatingAccounts,
     required this.acitveStake,
     required this.delinquentStake,
+    required this.circulatingPercent,
+    required this.nonCirculatingPercent,
+    required this.totalSolDelinquentRatio,
     required this.coinData,
   });
 
   /// Total supply in lamports.
-  final int total;
+  final double total;
 
   /// Circulating supply in lamports.
-  final int circulating;
+  final double circulating;
 
   /// Non-circulating supply in lamports.
-  final int nonCirculating;
-
-  /// An array of account addresses of non-circulating accounts, as strings. If
-  /// `excludeNonCirculatingAccountsList` is enabled, the returned array will be
-  /// empty.
-  final List<String> nonCirculatingAccounts;
+  final double nonCirculating;
 
   // Current active stake
-  final int acitveStake;
+  final double acitveStake;
 
   // Delinquent stake
-  final int delinquentStake;
+  final double delinquentStake;
+
+  // double circulatingPercentage
+  final double circulatingPercent;
+
+  // double non-circulatingPercentage
+  final double nonCirculatingPercent;
+
+  // total totalSolDelinquentRatio in %
+  final double totalSolDelinquentRatio;
 
   //coin data
   final CoinData coinData;
