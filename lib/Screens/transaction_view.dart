@@ -225,7 +225,7 @@ class _TransactionViewState extends State<TransactionView> {
                                       ),
                                       DataCell(
                                         Text(
-                                          change[i].toStringAsFixed(2),
+                                          change[i].toString(),
                                         ),
                                       ),
                                     ],
