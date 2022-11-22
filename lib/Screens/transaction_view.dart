@@ -248,7 +248,7 @@ class _TransactionViewState extends State<TransactionView> {
                                         children: [
                                           Container(
                                             padding: const EdgeInsets.all(10.0),
-                                            child: Text(e),
+                                            child: Text(logMessageFormat(e)),
                                           ),
                                         ],
                                       ),

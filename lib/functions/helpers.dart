@@ -1,3 +1,4 @@
+import 'package:explorer/functions/programs.dart';
 import 'package:intl/intl.dart';
 import 'package:solana/dto.dart';
 import 'package:solana/solana.dart';
@@ -60,31 +61,10 @@ List<double> getChange(TransactionDetails? transactionDetails) {
 }
 
 String addressToShortString(String? address) {
-  switch (address) {
-    case "11111111111111111111111111111111":
-      return "System Program";
-    case "ATokenGPvbdGVxr1b2hvZbsiqW5xWH25efTNsLJA8knL":
-      return "AToken Program";
-    case "SysvarRent111111111111111111111111111111111":
-      return "Sysvar: Rent";
-    case "TokenkegQfeZyiNwAJbNbGKPFXCWuBvf9Ss623VQ5DA":
-      return "Token Program";
-    case "22Y43yTVxuUkoRKdm9thyRhQ3SdgQS7c7kB6UNCiaczD":
-      return "Serum Swap";
-    case "9xQeWvG816bUx9EPjHmaT23yvVM2ZWbrrpZb9PusVFin":
-      return "Serum Dex V3";
-    case "EPjFWdd5AufqSSqeM2qN1xzybapC8G4wEGGkZwyTDt1v":
-      return "USDC";
-    case "SysvarC1ock11111111111111111111111111111111":
-      return "Sysvar: C1ock";
-    case "Crt7UoUR6QgrFrN7j8rmSQpUTNWNSitSwWvsWGf1qZ5t":
-      return "Saber Router";
-    case "SSwpkEEcbUqx4vtoEByFjSkhKdCT862DNVb52nZg1UZ":
-      return "Saber Swap";
-    case "So11111111111111111111111111111111111111112":
-      return "Wrapped SOL";
-    default:
-      return "${address?.substring(0, 8)}...";
+  if (programs.containsKey(address)) {
+    return programs[address]!;
+  } else {
+    return '${address!.substring(0, 8)}...${address.substring(address.length - 4, address.length)}';
   }
 }
 
@@ -100,4 +80,16 @@ String result(Meta? meta) {
   } else {
     return meta?.err?.keys.first ?? "Fail";
   }
+}
+
+String logMessageFormat(String message) {
+  List<String> messageList = message.split(" ");
+  if (messageList.length >= 2 && messageList[1].length > 20) {
+    String program = addressToShortString(messageList[1]);
+    messageList[1] = program;
+  } else if (messageList.length >= 3 && messageList[2].length > 20) {
+    String program = addressToShortString(messageList[2]);
+    messageList[2] = program;
+  }
+  return messageList.join(" ");
 }
