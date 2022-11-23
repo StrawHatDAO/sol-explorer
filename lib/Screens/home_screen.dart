@@ -3,6 +3,7 @@ import 'package:explorer/Screens/transaction_view.dart';
 import 'package:explorer/api_calls/data_modal.dart';
 import 'package:explorer/api_calls/get_cluster_data.dart';
 import 'package:explorer/functions/helpers.dart';
+import 'package:explorer/widgets/bargraph.dart';
 import 'package:flutter/material.dart';
 import 'package:solana/solana.dart';
 
@@ -202,7 +203,12 @@ class _HomeScreenState extends State<HomeScreen> {
                             ),
                           ),
                         ],
-                      )
+                      ),
+                      const SizedBox(height: 10),
+                      SizedBox(
+                        height: MediaQuery.of(context).size.height / 2,
+                        child: BarGraph(data: snapshot.data?.tpsByMinute ?? []),
+                      ),
                     ],
                   ),
                 );

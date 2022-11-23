@@ -1,3 +1,5 @@
+import 'package:explorer/widgets/tps_data.dart';
+
 class ClusterDataDetails {
   const ClusterDataDetails({
     required this.total,
@@ -9,6 +11,7 @@ class ClusterDataDetails {
     required this.nonCirculatingPercent,
     required this.totalSolDelinquentRatio,
     required this.coinData,
+    required this.tpsByMinute,
   });
 
   /// Total supply in lamports.
@@ -37,6 +40,9 @@ class ClusterDataDetails {
 
   //coin data
   final CoinData coinData;
+
+  // TPS data
+  final List<TpsData> tpsByMinute;
 }
 
 class CoinData {
